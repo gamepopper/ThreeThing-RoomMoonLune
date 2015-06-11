@@ -129,7 +129,6 @@ namespace RoomMoonLune
                             {
                                 obj.Kill();
                                 moonOreCount += 100;
-                                
                             }
                         }
                         break;
@@ -142,11 +141,12 @@ namespace RoomMoonLune
 
            
 
-            Score.TextString = "    Score: " + moonOreCount;
+            Score.TextString = "    Score: " + moonOreCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
 
-            if (RGlobal.Input.isKeyPressed(Keys.P))
+            if (moonOreCount >= 1000)
             {
+                moonOreCount = 1000;
                 RGlobal.Game.SwitchState(new Stage2());
             }
         }

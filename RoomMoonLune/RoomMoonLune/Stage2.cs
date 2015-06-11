@@ -15,7 +15,6 @@ namespace RoomMoonLune
     class Stage2 : IRState
     {
         Sprite Moon;
-        ParticleManager particleManager;
         Random rand;
 
         public void Initialize()
@@ -29,9 +28,6 @@ namespace RoomMoonLune
             Moon.Animation.Add("standard", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 }, true, 11);
             Moon.Animation.Play("standard");
             Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight/2);
-
-          
-
         }
 
         public void UnloadContent()
@@ -50,7 +46,6 @@ namespace RoomMoonLune
         {
             spriteBatch.Begin();
            // Moon.Draw(spriteBatch);
-            particleManager.Draw(spriteBatch);
             spriteBatch.End();
         }
     }
