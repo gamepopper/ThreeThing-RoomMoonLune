@@ -26,7 +26,7 @@ namespace Ricoh2DFramework.Collisions
             collisionPolygon = new Polygon();
         }
 
-        public void SetSize(int height, int width)
+        public void SetSize(int width, int height)
         {
             if (this.width != width || this.height != height)
             {
