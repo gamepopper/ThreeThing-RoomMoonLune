@@ -101,6 +101,11 @@ namespace RoomMoonLune
             SetStartingPosition();
         }
 
+        public void Kill()
+        {
+            isAlive = false;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
            if(isAlive)

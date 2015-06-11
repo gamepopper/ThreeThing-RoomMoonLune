@@ -18,7 +18,8 @@ namespace RoomMoonLune
         Texture2D asteroidTexture;
         List<SpawningObject> spawningObjects = new List<SpawningObject>();
         float spawningTime;
-        Sprite Ship;
+        SpaceShip Ship;
+        List<Sprite> RenderList = new List<Sprite>();
 
         public void Initialize()
         {
@@ -31,7 +32,7 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
-            Ship = new Sprite(Content.Load<Texture2D>("TempShip"));
+            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), 160, 90);
             Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
@@ -44,6 +45,9 @@ namespace RoomMoonLune
             {
                 spawningObjects.Add(new SpawningObject(asteroidTexture, 240, 216, rand));
             }
+
+            RenderList.AddRange(spawningObjects);
+            RenderList.Add(Ship);
         }
 
         public void UnloadContent()
@@ -81,6 +85,7 @@ namespace RoomMoonLune
                     {
                         spawningObjects[i].Respawn();
                         spawningTime = 0.0f;
+                        RenderList.Sort(ByScale);
                         break;
                     }
                 }
@@ -94,11 +99,12 @@ namespace RoomMoonLune
             {
                 obj.Update(gameTime);
 
-                if (obj.IsAlive && obj.Scale.X > 0.8f && obj.Scale.X < 1.0f)
+                if (obj.IsAlive && obj.Scale.X > 0.9f && obj.Scale.X < 1.0f)
                 {
                     if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
                     {
-                        RGlobal.BackgroundColor = Color.Red;
+                        obj.Kill();
+                        Ship.Health -= 5;
                     }
                 }
             }
@@ -137,11 +143,6 @@ namespace RoomMoonLune
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            List<Sprite> RenderList = new List<Sprite>();
-            RenderList.AddRange(spawningObjects);
-            RenderList.Add(Ship);
-            RenderList.Sort(ByScale);
-
             spriteBatch.Begin();
 
             for (int i = 0; i < RenderList.Count; i++)
