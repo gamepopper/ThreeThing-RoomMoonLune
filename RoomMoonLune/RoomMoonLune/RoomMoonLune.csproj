@@ -149,7 +149,9 @@
     <Compile Include="Ricoh2D\RGame.cs" />
     <Compile Include="Ricoh2D\RGlobal.cs" />
     <Compile Include="Ricoh2D\RObject.cs" />
+    <Compile Include="SpawningObject.cs" />
     <Compile Include="Stage1.cs" />
+    <Compile Include="Stage2.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
