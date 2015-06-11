@@ -65,6 +65,15 @@ namespace RoomMoonLune
                 Ship.Drag = new Vector2(1.001f, 1);
             }
 
+            if (Ship.Collider.Box.Right > RGlobal.Resolution.ScreenWidth + Ship.Collider.Box.Width)
+            {
+                Ship.Position = new Vector2(-Ship.Collider.Box.Width / 2, Ship.Position.Y);
+            }
+            else if (Ship.Collider.Box.Left < -Ship.Collider.Box.Width)
+            {
+                Ship.Position = new Vector2(RGlobal.Resolution.ScreenWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
+            }
+
             if (RGlobal.Input.isKeyPressed(Keys.P))
             {
                 RGlobal.Game.SwitchState(new Stage2());
