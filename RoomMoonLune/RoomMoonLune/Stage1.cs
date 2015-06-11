@@ -12,7 +12,6 @@ namespace RoomMoonLune
     {
         Sprite Ship;
         
-        
         public void Initialize()
         {
             RGlobal.BackgroundColor = Color.CornflowerBlue;
@@ -64,6 +63,11 @@ namespace RoomMoonLune
             else
             {
                 Ship.Drag = new Vector2(1.001f, 1);
+            }
+
+            if (RGlobal.Input.isKeyPressed(Keys.P))
+            {
+                RGlobal.Game.SwitchState(new Stage2());
             }
         }
 
