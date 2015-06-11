@@ -67,10 +67,14 @@ namespace RoomMoonLune
                 {
                     Position = new Vector2(RGlobal.Resolution.VirtualWidth + Collider.Box.Width / 2, Position.Y);
                 }
+
+                RGlobal.Sound.Play("RocketJet", 0.1f, 0, 0, true);
             }
             else
             {
-                
+
+                RGlobal.Sound.Stop("RocketJet");
+
             }
         }
 

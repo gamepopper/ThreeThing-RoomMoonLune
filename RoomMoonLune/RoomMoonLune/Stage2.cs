@@ -10,6 +10,7 @@ using Ricoh2DFramework;
 using Ricoh2DFramework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ricoh2DFramework.Collisions;
+using Microsoft.Xna.Framework.Audio;
 
 namespace RoomMoonLune
 {
@@ -62,7 +63,7 @@ namespace RoomMoonLune
 
         public void UnloadContent()
         {
-           
+            RGlobal.Sound.Clear();
         }
 
         public void Update(GameTime gameTime)

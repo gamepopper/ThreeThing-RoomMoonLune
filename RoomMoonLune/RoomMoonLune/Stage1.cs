@@ -8,6 +8,7 @@ using Ricoh2DFramework.Graphics;
 using Ricoh2DFramework.Collisions;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace RoomMoonLune
 {
@@ -64,12 +65,15 @@ namespace RoomMoonLune
             Score.Position = new Vector2(0, 25);
             Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
             Health.Position = new Vector2(0, 25);
-            
+
+            RGlobal.Sound.Add("RocketJet", Content.Load<SoundEffect>("Rocket"));
+            RGlobal.Sound.Add("Asteroid", Content.Load<SoundEffect>("Explosion"));
+            RGlobal.Sound.Add("Ore", Content.Load<SoundEffect>("Ore"));
         }
 
         public void UnloadContent()
         {
-            
+            RGlobal.Sound.Clear();
         }
 
         public void Update(GameTime gameTime)
@@ -117,6 +121,7 @@ namespace RoomMoonLune
                             {
                                 obj.Kill();
                                 Ship.Health -= 5;
+                                RGlobal.Sound.Play("Asteroid");
                             }
                         }
                         break;
@@ -127,14 +132,13 @@ namespace RoomMoonLune
                             {
                                 obj.Kill();
                                 moonOreCount += 100;
+                                RGlobal.Sound.Play("Ore");
                             }
                         }
                         break;
                     default:
                         break;
                 }
-
-               
             }
 
             Score.TextString = "    Score: " + moonOreCount + "/1000";
