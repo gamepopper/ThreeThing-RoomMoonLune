@@ -16,7 +16,6 @@ namespace RoomMoonLune
     {
         Random rand;
         Sprite Moon;
-        SpawningObject spawnObj;
         List<SpawningObject> spawningObjects = new List<SpawningObject>();
         float spawningTime;
 
