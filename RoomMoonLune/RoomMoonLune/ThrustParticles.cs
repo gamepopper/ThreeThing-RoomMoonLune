@@ -19,8 +19,12 @@ namespace RoomMoonLune
         float fadeSpeed = 1.0f;
         bool isAlive;
         Vector2 direction;
-        public bool IsAlive { get { return isAlive; }
-}
+        public bool IsAlive
+        {
+            get { return isAlive; }
+            set { isAlive = value; }
+        }
+
 
 public ThrustParticles(Texture2D texture,int width, int height,Random rand):base(texture,width,height)
         {

@@ -18,6 +18,7 @@ namespace RoomMoonLune
         float curTime = 0.0f;
         Random rand;
         Vector2 spawnPosition;
+        public List<ThrustParticles> Particles { get { return particles; } }
         public ParticleManager(Texture2D texture, int width, int height, Random rand)
         {
             this.rand = rand;
