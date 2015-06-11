@@ -51,8 +51,6 @@ namespace RoomMoonLune
 
             Moon = new Sprite(Content.Load<Texture2D>("Moon"), 240, 216);
             Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
-            
-            
 
             for (int i = 0; i < 10; i++)
             {
@@ -138,8 +136,6 @@ namespace RoomMoonLune
 
                
             }
-
-           
 
             Score.TextString = "    Score: " + moonOreCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
