@@ -21,6 +21,9 @@ namespace RoomMoonLune
         SpaceShip Ship;
         List<Sprite> RenderList = new List<Sprite>();
 
+        Text Score;
+        Text Health;
+
         public void Initialize()
         {
             RGlobal.Input.InvertedLeft = true;
@@ -48,6 +51,12 @@ namespace RoomMoonLune
 
             RenderList.AddRange(spawningObjects);
             RenderList.Add(Ship);
+
+            Score = new Text(Content.Load<SpriteFont>("Font"), "Score: ", RGlobal.Resolution.VirtualWidth, TextAlignment.LEFT);
+            Score.Position = new Vector2(0, 25);
+            Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
+            Health.Position = new Vector2(0, 25);
+            
         }
 
         public void UnloadContent()
@@ -129,6 +138,9 @@ namespace RoomMoonLune
                 Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
             }
 
+            Score.TextString = "    Score: 0";
+            Health.TextString = "" + (int)Ship.Health + ": Health     ";
+
             if (RGlobal.Input.isKeyPressed(Keys.P))
             {
                 RGlobal.Game.SwitchState(new Stage2());
@@ -143,6 +155,9 @@ namespace RoomMoonLune
             {
                 RenderList[i].Draw(spriteBatch);
             }
+
+            Score.Draw(spriteBatch);
+            Health.Draw(spriteBatch);
 
             spriteBatch.End();
         }
