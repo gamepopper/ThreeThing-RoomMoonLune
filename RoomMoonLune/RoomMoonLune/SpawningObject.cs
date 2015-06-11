@@ -23,7 +23,7 @@ namespace RoomMoonLune
         #region Variables
         float               scaleSpeed;
         float               fadingSpeed = 0.8f;
-        float               maxScale = 0.4f;
+        float               maxScale = 1.5f;
         Vector2             randomDirection;
         Random              rand;
         bool                isAlive;
@@ -37,10 +37,9 @@ namespace RoomMoonLune
         #endregion
         public SpawningObject(Texture2D texture, int width, int height, Random rand): base (texture,width,height) 
         {
-
             this.rand = rand;
             this.scale = new Vector2(0.0f, 0.0f);
-            scaleSpeed = 0.03f;
+            scaleSpeed = 0.09f;
             SetStartingPosition();
             isAlive = false;
 
@@ -48,14 +47,14 @@ namespace RoomMoonLune
             if (randomNum == 0)
             {
                 type = EnemyType.asteroid;
-                Animation.Add("asteroid", new int[] { 0, 1, 2, 3, 4, 5 }, true);
-                Animation.Play("asteroid");
+                //Animation.Add("asteroid", new int[] { 0, 1, 2, 3, 4, 5 }, true);
+                //Animation.Play("asteroid");
             }
             else if (randomNum == 1)
             {
                 type = EnemyType.collectable;
-                Animation.Add("collectable", new int[] { 6, 7, 8, 9, 10, 11 }, true);
-                Animation.Play("collectable");
+                //Animation.Add("collectable", new int[] { 6, 7, 8, 9, 10, 11 }, true);
+                //Animation.Play("collectable");
             }
 
            
@@ -74,8 +73,8 @@ namespace RoomMoonLune
             if (isAlive)
             {
                 //scale up to give effect of travelling closer to screen
-                Vector2 scaleUp = new Vector2(scale.X + scaleSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds
-                    , scale.Y + scaleSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                Vector2 scaleUp = new Vector2(scale.X + scaleSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds, 
+                    scale.Y + scaleSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
                 //check if scaled to max then start fading out
                 if (scale.X < maxScale)
@@ -90,6 +89,7 @@ namespace RoomMoonLune
 
                 //update position
                 position += randomDirection;
+                base.Update(gameTime);
             }
         }
 
@@ -103,7 +103,8 @@ namespace RoomMoonLune
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-           if(isAlive) base.Draw(spriteBatch);
+           if(isAlive)
+                base.Draw(spriteBatch);
         }
 
     }

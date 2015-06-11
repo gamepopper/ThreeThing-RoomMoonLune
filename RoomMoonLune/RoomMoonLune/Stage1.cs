@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Ricoh2DFramework;
 using Ricoh2DFramework.Graphics;
+using Ricoh2DFramework.Collisions;
 using System;
 using System.Collections.Generic;
 
@@ -35,13 +36,13 @@ namespace RoomMoonLune
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
 
-            Moon = new Sprite(Content.Load<Texture2D>("Moon"), 1280, 720);
-            Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
+            Moon = new Sprite(Content.Load<Texture2D>("Moon"), 240, 216);
+            Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
             
             asteroidTexture = Content.Load<Texture2D>("Moon");
             for (int i = 0; i < 10; i++)
             {
-                spawningObjects.Add(new SpawningObject(asteroidTexture, 1280, 720, rand));
+                spawningObjects.Add(new SpawningObject(asteroidTexture, 240, 216, rand));
             }
         }
 
@@ -70,9 +71,9 @@ namespace RoomMoonLune
 
             Ship.Update(gameTime);
 
-            if (Ship.Position.Y + Ship.Collider.Box.Height/2 > RGlobal.Resolution.ScreenHeight)
+            if (Ship.Position.Y + Ship.Collider.Box.Height/2 > RGlobal.Resolution.VirtualHeight)
             {
-                Ship.Position = new Vector2(Ship.Position.X, RGlobal.Resolution.ScreenHeight - (Ship.Collider.Box.Height / 2));
+                Ship.Position = new Vector2(Ship.Position.X, RGlobal.Resolution.VirtualHeight - (Ship.Collider.Box.Height / 2));
                 Ship.Velocity.Y = 0;
                 Ship.Drag = new Vector2(1.02f, 1);
             }
@@ -81,13 +82,13 @@ namespace RoomMoonLune
                 Ship.Drag = new Vector2(1.001f, 1);
             }
 
-            if (Ship.Collider.Box.Right > RGlobal.Resolution.ScreenWidth + Ship.Collider.Box.Width)
+            if (Ship.Collider.Box.Right > RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width)
             {
                 Ship.Position = new Vector2(-Ship.Collider.Box.Width / 2, Ship.Position.Y);
             }
             else if (Ship.Collider.Box.Left < -Ship.Collider.Box.Width)
             {
-                Ship.Position = new Vector2(RGlobal.Resolution.ScreenWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
+                Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
             }
 
             spawningTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -107,9 +108,19 @@ namespace RoomMoonLune
 
             Moon.Rotation += 5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            foreach (var obj in spawningObjects)
+            RGlobal.BackgroundColor = Color.Black;
+
+            foreach (SpawningObject obj in spawningObjects)
             {
                 obj.Update(gameTime);
+
+                if (obj.IsAlive && obj.Scale.X > 0.8f && obj.Scale.X < 1.0f)
+                {
+                    if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
+                    {
+                        RGlobal.BackgroundColor = Color.Red;
+                    }
+                }
             }
 
             if (RGlobal.Input.isKeyPressed(Keys.P))

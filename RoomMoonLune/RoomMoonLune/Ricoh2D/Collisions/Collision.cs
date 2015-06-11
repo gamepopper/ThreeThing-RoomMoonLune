@@ -188,7 +188,14 @@ namespace Ricoh2DFramework.Collisions
                 collisionBox.Inflate(offset, offset);
 
                 collisionCircle.Position = centrePos;
-                collisionCircle.Radius = (width / 2) + offset;
+                if (width < height)
+                {
+                    collisionCircle.Radius = (width / 2) + offset;
+                }
+                else
+                {
+                    collisionCircle.Radius = (height / 2) + offset;
+                }
                 collisionCircle.Radius *= (scale.X + scale.Y) / 2;
 
                 collisionPolygon.Position = centrePos;
