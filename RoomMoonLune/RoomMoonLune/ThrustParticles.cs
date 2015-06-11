@@ -82,7 +82,7 @@ public ThrustParticles(Texture2D texture,int width, int height,Random rand):base
             aliveTime = 2.0f;
             curTime = 0.0f;
             position = spawnPosition;
-            position.Y = spawnPosition.Y + 50.0f;
+            position.Y = spawnPosition.Y + 65.0f;
             this.scale = new Vector2(0.2f, 0.2f);
             color = Color.Yellow;
             opacity = 1;
