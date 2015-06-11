@@ -142,7 +142,7 @@ namespace RoomMoonLune
 
            
 
-            Score.TextString = "    Score: 0";
+            Score.TextString = "    Score: " + moonOreCount;
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
 
             if (RGlobal.Input.isKeyPressed(Keys.P))
