@@ -1,24 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Ricoh2DFramework;
-using Ricoh2DFramework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using Ricoh2DFramework;
+using Ricoh2DFramework.Graphics;
+using System;
+using System.Collections.Generic;
 
 namespace RoomMoonLune
 {
     class Stage1 : IRState
     {
+        Random rand;
+        Sprite Moon;
+        Texture2D asteroidTexture;
+        List<SpawningObject> spawningObjects = new List<SpawningObject>();
+        float spawningTime;
         Sprite Ship;
-        
+
         public void Initialize()
         {
-            RGlobal.BackgroundColor = Color.CornflowerBlue;
             RGlobal.Input.InvertedLeft = true;
             RGlobal.Input.InvertedRight = true;
             TouchPanel.EnableMouseGestures = true;
             TouchPanel.EnableMouseTouchPoint = true;
+            rand = new Random();
         }
 
         public void LoadContent(ContentManager Content)
@@ -27,6 +34,15 @@ namespace RoomMoonLune
             Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
+
+            Moon = new Sprite(Content.Load<Texture2D>("Moon"), 1280, 720);
+            Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
+            
+            asteroidTexture = Content.Load<Texture2D>("Moon");
+            for (int i = 0; i < 10; i++)
+            {
+                spawningObjects.Add(new SpawningObject(asteroidTexture, 1280, 720, rand));
+            }
         }
 
         public void UnloadContent()
@@ -74,6 +90,28 @@ namespace RoomMoonLune
                 Ship.Position = new Vector2(RGlobal.Resolution.ScreenWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
             }
 
+            spawningTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (spawningTime > 2.0f)
+            {
+                for (int i = 0; i < spawningObjects.Count - 1; i++)
+                {
+                    if (!spawningObjects[i].IsAlive)
+                    {
+                        spawningObjects[i].Respawn();
+                        spawningTime = 0.0f;
+                        break;
+                    }
+                }
+            }
+
+            Moon.Rotation += 5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            foreach (var obj in spawningObjects)
+            {
+                obj.Update(gameTime);
+            }
+
             if (RGlobal.Input.isKeyPressed(Keys.P))
             {
                 RGlobal.Game.SwitchState(new Stage2());
@@ -83,7 +121,14 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            for (int i = spawningObjects.Count - 1; i > 0; i--)
+            {
+                spawningObjects[i].Draw(spriteBatch);
+            }
+
             Ship.Draw(spriteBatch);
+
             spriteBatch.End();
         }
     }
