@@ -76,12 +76,13 @@ public ThrustParticles(Texture2D texture,int width, int height,Random rand):base
                 base.Draw(spriteBatch);
         }
 
-        public void Respawn(Vector2 dir)
+        public void Respawn(Vector2 dir, Vector2 spawnPosition)
         {
             isAlive = true;
             aliveTime = 2.0f;
             curTime = 0.0f;
-            position = new Vector2(350, 150);
+            position = spawnPosition;
+            position.Y = spawnPosition.Y + 50.0f;
             this.scale = new Vector2(0.2f, 0.2f);
             color = Color.Yellow;
             opacity = 1;

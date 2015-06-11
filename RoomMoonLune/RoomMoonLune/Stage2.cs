@@ -30,8 +30,8 @@ namespace RoomMoonLune
             Moon.Animation.Play("standard");
             Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight/2);
 
-            particleManager = new ParticleManager(Content.Load<Texture2D>("Particle"), 64, 64,rand);
-            
+          
+
         }
 
         public void UnloadContent()
@@ -41,7 +41,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
-            particleManager.Update(gameTime);
+           
             Moon.Update(gameTime);
            // Moon.Rotation += 5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }

@@ -17,6 +17,7 @@ namespace RoomMoonLune
         float spawnTime = 0.15f;
         float curTime = 0.0f;
         Random rand;
+        Vector2 spawnPosition;
         public ParticleManager(Texture2D texture, int width, int height, Random rand)
         {
             this.rand = rand;
@@ -27,8 +28,10 @@ namespace RoomMoonLune
 
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, SpaceShip ship)
         {
+            spawnPosition = ship.Position;
+
             curTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (curTime > spawnTime)
             {
@@ -36,13 +39,16 @@ namespace RoomMoonLune
                 {
                     if (!particle.IsAlive)
                     {
-                        particle.Respawn(new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f, (float)(30.0f)));
+                        float angle = ship.Rotation;
+                        angle -= 3 * MathHelper.PiOver2;
+                        
+
+                        particle.Respawn(new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f - (angle * 20), (float)( 30.0f)), spawnPosition);
                         curTime = 0.0f;
                         break;
                     }
                 }
             }
-
             foreach (var particle in particles)
             {
                 particle.Update(gameTime);

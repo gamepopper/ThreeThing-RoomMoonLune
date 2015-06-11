@@ -16,10 +16,14 @@ namespace RoomMoonLune
         Random rand;
         Sprite Moon;
         Texture2D asteroidTexture;
+        Texture2D moonOreTexture;
+        Texture2D particleTexture;
         List<SpawningObject> spawningObjects = new List<SpawningObject>();
         float spawningTime;
         SpaceShip Ship;
         List<Sprite> RenderList = new List<Sprite>();
+
+        int moonOreCount = 0;
 
         public void Initialize()
         {
@@ -32,7 +36,11 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
-            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), 160, 90);
+            asteroidTexture = Content.Load<Texture2D>("Moon");
+            moonOreTexture = Content.Load<Texture2D>("MoonOre");
+            particleTexture = Content.Load<Texture2D>("Particle");
+
+            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"),particleTexture, 160, 90,rand);
             Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
@@ -40,10 +48,11 @@ namespace RoomMoonLune
             Moon = new Sprite(Content.Load<Texture2D>("Moon"), 240, 216);
             Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
             
-            asteroidTexture = Content.Load<Texture2D>("Moon");
+            
+
             for (int i = 0; i < 10; i++)
             {
-                spawningObjects.Add(new SpawningObject(asteroidTexture, 240, 216, rand));
+                spawningObjects.Add(new SpawningObject(asteroidTexture,moonOreTexture, 240, 216, rand));
             }
 
             RenderList.AddRange(spawningObjects);
@@ -59,8 +68,7 @@ namespace RoomMoonLune
         {
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
-            if (RGlobal.Input.LeftAnalogStick.Length() != 0)
-                Ship.Rotation = (float)Math.Atan2(RGlobal.Input.LeftAnalogStick.Y, RGlobal.Input.LeftAnalogStick.X);
+            Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4/2);
 
             if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
             {
@@ -92,42 +100,37 @@ namespace RoomMoonLune
             foreach (SpawningObject obj in spawningObjects)
             {
                 obj.Update(gameTime);
-
-                if (obj.IsAlive && obj.Scale.X > 0.9f && obj.Scale.X < 1.0f)
+                switch (obj.Type)
                 {
-                    if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
-                    {
-                        obj.Kill();
-                        Ship.Health -= 5;
-                    }
+                    case EnemyType.asteroid:
+                        if (obj.IsAlive && obj.Scale.X > 0.9f && obj.Scale.X < 1.0f)
+                        {
+                            if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
+                            {
+                                obj.Kill();
+                                Ship.Health -= 5;
+                            }
+                        }
+                        break;
+                    case EnemyType.moonOre:
+                        if (obj.IsAlive && obj.Scale.X > 0.3f && obj.Scale.X < 0.4f)
+                        {
+                            if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
+                            {
+                                obj.Kill();
+                                moonOreCount += 100;
+                                
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
+               
             }
 
-            if (Ship.Position.Y + Ship.Collider.Box.Height/2 > RGlobal.Resolution.VirtualHeight)
-            {
-                Ship.Position = new Vector2(Ship.Position.X, RGlobal.Resolution.VirtualHeight - (Ship.Collider.Box.Height / 2));
-                Ship.Velocity.Y = 0;
-                Ship.Drag = new Vector2(1.01f, 1);
-            }
-            else if (Ship.Position.Y - Ship.Collider.Box.Height/2 < 0)
-            {
-                Ship.Position = new Vector2(Ship.Position.X, +(Ship.Collider.Box.Height / 2));
-                Ship.Velocity.Y = 0;
-                Ship.Drag = new Vector2(1.01f, 1);
-            }
-            else
-            {
-                Ship.Drag = new Vector2(1.001f, 1);
-            }
-
-            if (Ship.Collider.Box.Right > RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width)
-            {
-                Ship.Position = new Vector2(-Ship.Collider.Box.Width / 2, Ship.Position.Y);
-            }
-            else if (Ship.Collider.Box.Left < -Ship.Collider.Box.Width)
-            {
-                Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
-            }
+           
 
             if (RGlobal.Input.isKeyPressed(Keys.P))
             {
