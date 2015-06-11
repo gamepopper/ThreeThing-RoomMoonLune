@@ -20,7 +20,11 @@ namespace RoomMoonLune
         Sprite landing;
         Texture2D particleTexture;
         SpaceShip Ship;
-        
+
+        float moonOreCount = 1000;
+        Text Score;
+        Text Health;
+
         public void Initialize()
         {
             rand = new Random();
@@ -35,6 +39,7 @@ namespace RoomMoonLune
             //Moon.Animation.Play("standard");
             Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
             Moon.Scale = new Vector2(1.0f, 1.0f);
+            Moon.Rotation = (float)rand.NextDouble() * MathHelper.TwoPi;
 
             landing.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
             landing.Origin = new Vector2(landing.Origin.X, 750);
@@ -43,9 +48,16 @@ namespace RoomMoonLune
             particleTexture = Content.Load<Texture2D>("Particle");
 
             Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), particleTexture, 160, 90, rand);
-            Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
+            Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 0) / 2;
+            Ship.Velocity.X = (float)(rand.NextDouble() / 2) + 1;
+            Ship.Velocity.X *= 50;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
+
+            Score = new Text(Content.Load<SpriteFont>("Font"), "Score: ", RGlobal.Resolution.VirtualWidth, TextAlignment.LEFT);
+            Score.Position = new Vector2(0, 25);
+            Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
+            Health.Position = new Vector2(0, 25);
         }
 
         public void UnloadContent()
@@ -57,6 +69,8 @@ namespace RoomMoonLune
         {
             if (!Ship.IsDocking)
             {
+                moonOreCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
                 Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
@@ -87,7 +101,7 @@ namespace RoomMoonLune
             RGlobal.BackgroundColor = Color.Black;
             if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
             {
-                if (RGlobal.Input.isGamePadButtonUp(Buttons.A))
+                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 5 && Math.Abs(Ship.Velocity.Y) < 3)
                 {
                     Ship.IsDocking = true;
                     foreach (var particle in Ship.PManager.Particles)
@@ -96,6 +110,9 @@ namespace RoomMoonLune
                     }
                 }
             }
+
+            Score.TextString = "    Score: " + (int)moonOreCount + "/1000";
+            Health.TextString = "" + (int)Ship.Health + ": Health     ";
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -105,6 +122,8 @@ namespace RoomMoonLune
             Moon.Draw(spriteBatch);
             landing.Draw(spriteBatch);
             Ship.Draw(spriteBatch);
+            Score.Draw(spriteBatch);
+            Health.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

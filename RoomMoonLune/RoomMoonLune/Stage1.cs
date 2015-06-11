@@ -139,8 +139,6 @@ namespace RoomMoonLune
                
             }
 
-           
-
             Score.TextString = "    Score: " + moonOreCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
 
