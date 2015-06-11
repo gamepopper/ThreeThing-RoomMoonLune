@@ -90,6 +90,10 @@ namespace RoomMoonLune
                 if (RGlobal.Input.isGamePadButtonUp(Buttons.A))
                 {
                     Ship.IsDocking = true;
+                    foreach (var particle in Ship.PManager.Particles)
+                    {
+                        particle.IsAlive = false;
+                    }
                 }
             }
         }

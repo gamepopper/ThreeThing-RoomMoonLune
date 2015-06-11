@@ -27,7 +27,7 @@ namespace RoomMoonLune
         int moonOreCount = 0;
         Text Score;
         Text Health;
-
+        StarField starField;
 
         public void Initialize()
         {
@@ -40,7 +40,7 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
-            asteroidTexture = Content.Load<Texture2D>("Moon");
+            asteroidTexture = Content.Load<Texture2D>("Asteroid");
             moonOreTexture = Content.Load<Texture2D>("MoonOre");
             particleTexture = Content.Load<Texture2D>("Particle");
 
@@ -51,12 +51,12 @@ namespace RoomMoonLune
 
             Moon = new Sprite(Content.Load<Texture2D>("Moon"), 240, 216);
             Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
-            
-            
+
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100,rand);
 
             for (int i = 0; i < 10; i++)
             {
-                spawningObjects.Add(new SpawningObject(asteroidTexture,moonOreTexture, 240, 216, rand));
+                spawningObjects.Add(new SpawningObject(asteroidTexture,moonOreTexture, 240, 216,rand));
             }
 
             RenderList.AddRange(spawningObjects);
@@ -149,12 +149,14 @@ namespace RoomMoonLune
                 moonOreCount = 1000;
                 RGlobal.Game.SwitchState(new Stage2());
             }
+
+            starField.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-
+            starField.Draw(spriteBatch);
             for (int i = 0; i < RenderList.Count; i++)
             {
                 RenderList[i].Draw(spriteBatch);

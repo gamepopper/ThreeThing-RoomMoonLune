@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Game1.cs" />
     <Compile Include="ParticleManager.cs" />
+    <Compile Include="StarField.cs" />
     <Compile Include="ThrustParticles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ricoh2D\Audio\MusicManager.cs" />

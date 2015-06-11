@@ -49,6 +49,8 @@ namespace RoomMoonLune
             {
                 type = EnemyType.asteroid;
                 this.Texture = texture;
+                
+                
                 //Animation.Add("asteroid", new int[] { 0, 1, 2, 3, 4, 5 }, true);
                 //Animation.Play("asteroid");
             }
@@ -56,6 +58,7 @@ namespace RoomMoonLune
             {
                 type = EnemyType.moonOre;
                 this.Texture = moonOreTexture;
+              
                 //Animation.Add("collectable", new int[] { 6, 7, 8, 9, 10, 11 }, true);
                 //Animation.Play("collectable");
             }

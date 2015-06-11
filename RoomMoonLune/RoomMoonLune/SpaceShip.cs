@@ -26,7 +26,7 @@ namespace RoomMoonLune
                 return 100;
             }
         }
-
+        public ParticleManager PManager { get { return particleManager; } }
         public SpaceShip(Texture2D texture,Texture2D particleTex, int width, int height,Random rand) : base(texture, width, height)
         {
             Health = 100;
