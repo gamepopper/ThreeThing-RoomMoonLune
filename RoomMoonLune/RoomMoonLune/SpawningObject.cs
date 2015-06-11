@@ -33,7 +33,7 @@ namespace RoomMoonLune
 
         #region GetSetters
         public bool IsAlive { get { return isAlive; } }
-
+        public EnemyType Type {  get { return type; } }
         #endregion
         public SpawningObject(Texture2D texture, int width, int height, Random rand): base (texture,width,height) 
         {
