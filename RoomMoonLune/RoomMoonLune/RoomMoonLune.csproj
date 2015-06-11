@@ -95,6 +95,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Reference Include="DPSFWinRT, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DPSF.2.5.0\lib\windows8\DPSFWinRT.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.14.3.177, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.0.14.3-build00177\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
@@ -127,6 +131,8 @@
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game1.cs" />
+    <Compile Include="ParticleManager.cs" />
+    <Compile Include="ThrustParticles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ricoh2D\Audio\MusicManager.cs" />
     <Compile Include="Ricoh2D\Audio\SoundManager.cs" />
