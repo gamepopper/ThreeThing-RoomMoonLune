@@ -21,13 +21,14 @@ namespace RoomMoonLune
         Texture2D particleTexture;
         SpaceShip Ship;
 
-        float moonOreCount = 1000;
+       
         Text Score;
         Text Health;
 
         public void Initialize()
         {
             rand = new Random();
+            
         }
 
         public void LoadContent(ContentManager Content)
@@ -69,7 +70,7 @@ namespace RoomMoonLune
         {
             if (!Ship.IsDocking)
             {
-                moonOreCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+               
 
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
@@ -81,7 +82,11 @@ namespace RoomMoonLune
             }
             else
             {
-                Ship.Position = Moon.Position;
+                if(LevelSingleton.CargoMoonCount > 0)
+                    LevelSingleton.CargoMoonCount -= 80 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (LevelSingleton.CargoMoonCount < 0)
+                    LevelSingleton.CargoMoonCount = 0;
+                        Ship.Position = Moon.Position;
                 Ship.Position += 625 * new Vector2((float)Math.Cos(Moon.Rotation - MathHelper.PiOver2), (float)Math.Sin(Moon.Rotation - MathHelper.PiOver2));
                 Ship.Rotation = Moon.Rotation - MathHelper.PiOver2;
 
@@ -101,7 +106,7 @@ namespace RoomMoonLune
             RGlobal.BackgroundColor = Color.Black;
             if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
             {
-                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 5 && Math.Abs(Ship.Velocity.Y) < 3)
+                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
                 {
                     Ship.IsDocking = true;
                     foreach (var particle in Ship.PManager.Particles)
@@ -111,7 +116,7 @@ namespace RoomMoonLune
                 }
             }
 
-            Score.TextString = "    Score: " + (int)moonOreCount + "/1000";
+            Score.TextString = "    Score: " + (int)LevelSingleton.CargoMoonCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
         }
 

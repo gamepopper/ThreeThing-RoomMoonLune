@@ -24,7 +24,7 @@ namespace RoomMoonLune
         List<Sprite> RenderList = new List<Sprite>();
 
 
-        int moonOreCount = 0;
+        
         Text Score;
         Text Health;
         StarField starField;
@@ -118,7 +118,12 @@ namespace RoomMoonLune
                             if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
                             {
                                 obj.Kill();
-                                Ship.Health -= 5;
+
+                                Ship.Health -= 35;
+                                if(Ship.Health <0)
+                                {
+                                    //DEAD
+                                }
                             }
                         }
                         break;
@@ -128,7 +133,7 @@ namespace RoomMoonLune
                             if (CollisionManager.Collide(Ship.Collider, obj.Collider, CollisionType.Box))
                             {
                                 obj.Kill();
-                                moonOreCount += 100;
+                                LevelSingleton.CargoMoonCount += 100;
                             }
                         }
                         break;
@@ -139,12 +144,12 @@ namespace RoomMoonLune
                
             }
 
-            Score.TextString = "    Score: " + moonOreCount + "/1000";
+            Score.TextString = "    Score: " + LevelSingleton.CargoMoonCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
 
-            if (moonOreCount >= 1000)
+            if (LevelSingleton.CargoMoonCount >= 1000)
             {
-                moonOreCount = 1000;
+                LevelSingleton.CargoMoonCount = 1000;
                 RGlobal.Game.SwitchState(new Stage2());
             }
 
