@@ -71,26 +71,6 @@ namespace RoomMoonLune
 
             Ship.Update(gameTime);
 
-            if (Ship.Position.Y + Ship.Collider.Box.Height/2 > RGlobal.Resolution.VirtualHeight)
-            {
-                Ship.Position = new Vector2(Ship.Position.X, RGlobal.Resolution.VirtualHeight - (Ship.Collider.Box.Height / 2));
-                Ship.Velocity.Y = 0;
-                Ship.Drag = new Vector2(1.02f, 1);
-            }
-            else
-            {
-                Ship.Drag = new Vector2(1.001f, 1);
-            }
-
-            if (Ship.Collider.Box.Right > RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width)
-            {
-                Ship.Position = new Vector2(-Ship.Collider.Box.Width / 2, Ship.Position.Y);
-            }
-            else if (Ship.Collider.Box.Left < -Ship.Collider.Box.Width)
-            {
-                Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
-            }
-
             spawningTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (spawningTime > 2.0f)
@@ -123,6 +103,32 @@ namespace RoomMoonLune
                 }
             }
 
+            if (Ship.Position.Y + Ship.Collider.Box.Height/2 > RGlobal.Resolution.VirtualHeight)
+            {
+                Ship.Position = new Vector2(Ship.Position.X, RGlobal.Resolution.VirtualHeight - (Ship.Collider.Box.Height / 2));
+                Ship.Velocity.Y = 0;
+                Ship.Drag = new Vector2(1.01f, 1);
+            }
+            else if (Ship.Position.Y - Ship.Collider.Box.Height/2 < 0)
+            {
+                Ship.Position = new Vector2(Ship.Position.X, +(Ship.Collider.Box.Height / 2));
+                Ship.Velocity.Y = 0;
+                Ship.Drag = new Vector2(1.01f, 1);
+            }
+            else
+            {
+                Ship.Drag = new Vector2(1.001f, 1);
+            }
+
+            if (Ship.Collider.Box.Right > RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width)
+            {
+                Ship.Position = new Vector2(-Ship.Collider.Box.Width / 2, Ship.Position.Y);
+            }
+            else if (Ship.Collider.Box.Left < -Ship.Collider.Box.Width)
+            {
+                Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth + Ship.Collider.Box.Width / 2, Ship.Position.Y);
+            }
+
             if (RGlobal.Input.isKeyPressed(Keys.P))
             {
                 RGlobal.Game.SwitchState(new Stage2());
@@ -134,7 +140,6 @@ namespace RoomMoonLune
             List<Sprite> RenderList = new List<Sprite>();
             RenderList.AddRange(spawningObjects);
             RenderList.Add(Ship);
-
             RenderList.Sort(ByScale);
 
             spriteBatch.Begin();
@@ -149,9 +154,9 @@ namespace RoomMoonLune
 
         int ByScale(Sprite a, Sprite b)
         {
-            if (a.Scale.Length() > b.Scale.Length())
+            if (a.Scale.X > b.Scale.X)
                 return 1;
-            if (a.Scale.Length() < b.Scale.Length())
+            if (a.Scale.X < b.Scale.X)
                 return -1;
             else
                 return 0;
