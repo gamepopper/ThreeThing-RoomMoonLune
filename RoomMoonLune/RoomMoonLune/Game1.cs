@@ -1,5 +1,6 @@
 ﻿using Ricoh2DFramework;
 
+
 namespace RoomMoonLune
 {
     /// <summary>
