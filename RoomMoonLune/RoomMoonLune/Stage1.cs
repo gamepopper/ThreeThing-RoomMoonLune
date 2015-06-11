@@ -120,16 +120,30 @@ namespace RoomMoonLune
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            List<Sprite> RenderList = new List<Sprite>();
+            RenderList.AddRange(spawningObjects);
+            RenderList.Add(Ship);
+
+            RenderList.Sort(ByScale);
+
             spriteBatch.Begin();
 
-            for (int i = spawningObjects.Count - 1; i > 0; i--)
+            for (int i = 0; i < RenderList.Count; i++)
             {
-                spawningObjects[i].Draw(spriteBatch);
+                RenderList[i].Draw(spriteBatch);
             }
 
-            Ship.Draw(spriteBatch);
-
             spriteBatch.End();
+        }
+
+        int ByScale(Sprite a, Sprite b)
+        {
+            if (a.Scale.Length() > b.Scale.Length())
+                return 1;
+            if (a.Scale.Length() < b.Scale.Length())
+                return -1;
+            else
+                return 0;
         }
     }
 }
