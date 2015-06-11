@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Ricoh2DFramework;
 using Ricoh2DFramework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace RoomMoonLune
 {
@@ -66,13 +67,17 @@ namespace RoomMoonLune
 
             Moon.Rotation += 5f * (float)gameTime.ElapsedGameTime.TotalSeconds ;
 
+
             foreach (var obj in spawningObjects)
             {
                 obj.Update(gameTime);
             }
            
-            
-            
+            if (RGlobal.Input.isKeyPressed(Keys.P))
+            {
+                RGlobal.Game.SwitchState(new Stage1());
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
