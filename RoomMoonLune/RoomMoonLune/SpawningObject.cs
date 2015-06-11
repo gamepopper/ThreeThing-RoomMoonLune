@@ -13,6 +13,11 @@ using Ricoh2DFramework.Graphics;
 using System.Diagnostics;
 namespace RoomMoonLune
 {
+    enum EnemyType
+    {
+        asteroid,
+        collectable
+    }
     class SpawningObject : Sprite
     {
         #region Variables
@@ -22,6 +27,8 @@ namespace RoomMoonLune
         Vector2             randomDirection;
         Random              rand;
         bool                isAlive;
+        EnemyType           type;
+
         #endregion
 
         #region GetSetters
@@ -36,6 +43,22 @@ namespace RoomMoonLune
             scaleSpeed = 0.03f;
             SetStartingPosition();
             isAlive = false;
+
+            int randomNum = rand.Next(0, 1);
+            if (randomNum == 0)
+            {
+                type = EnemyType.asteroid;
+                Animation.Add("asteroid", new int[] { 0, 1, 2, 3, 4, 5 }, true);
+                Animation.Play("asteroid");
+            }
+            else if (randomNum == 1)
+            {
+                type = EnemyType.collectable;
+                Animation.Add("collectable", new int[] { 6, 7, 8, 9, 10, 11 }, true);
+                Animation.Play("collectable");
+            }
+
+           
         }
 
         public void SetStartingPosition()
