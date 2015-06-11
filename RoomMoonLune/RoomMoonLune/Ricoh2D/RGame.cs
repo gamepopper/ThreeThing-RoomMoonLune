@@ -158,8 +158,8 @@ namespace Ricoh2DFramework
 
         public void SwitchState(IRState newState)
         {
-            Content.Unload();
             currentState.UnloadContent();
+            Content.Unload();
             currentState = newState;
             currentState.Initialize();
             currentState.LoadContent(Content);
