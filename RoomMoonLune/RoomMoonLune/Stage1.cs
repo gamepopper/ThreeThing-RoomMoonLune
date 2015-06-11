@@ -59,14 +59,8 @@ namespace RoomMoonLune
         {
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
-            if (Ship.Acceleration.X < 0)
-            {
-                Ship.SpriteEffects = SpriteEffects.FlipHorizontally;
-            }
-            else if (Ship.Acceleration.X > 0)
-            {
-                Ship.SpriteEffects = SpriteEffects.None;
-            }
+            if (RGlobal.Input.LeftAnalogStick.Length() != 0)
+                Ship.Rotation = (float)Math.Atan2(RGlobal.Input.LeftAnalogStick.Y, RGlobal.Input.LeftAnalogStick.X);
 
             if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
             {
