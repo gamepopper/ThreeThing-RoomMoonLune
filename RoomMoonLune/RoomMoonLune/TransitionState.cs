@@ -50,13 +50,12 @@ namespace RoomMoonLune
             if (option == TransitionOptions.TOLEVEL1)
             {
                 ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight);
-                ship.Rotation = 3 * MathHelper.PiOver2;
                 ship.Velocity.Y = -200;
             }
             if (option == TransitionOptions.TOLEVEL2)
             {
                 ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight/2);
-                ship.Rotation = MathHelper.PiOver2;
+                ship.Rotation = MathHelper.Pi;
                 ship.Velocity.Y = 200;
             }
         }
