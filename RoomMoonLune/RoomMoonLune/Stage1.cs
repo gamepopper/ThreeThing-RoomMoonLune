@@ -40,7 +40,7 @@ namespace RoomMoonLune
             moonOreTexture = Content.Load<Texture2D>("MoonOre");
             particleTexture = Content.Load<Texture2D>("Particle");
 
-            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"),particleTexture, 160, 90,rand);
+            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"),particleTexture, 512, 512,rand);
             Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
@@ -82,8 +82,6 @@ namespace RoomMoonLune
         {
             bgMoon.Update(gameTime);
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
-
-            Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4/2);
 
             if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
             {

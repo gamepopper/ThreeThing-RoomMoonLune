@@ -44,7 +44,8 @@ namespace RoomMoonLune
         public void LoadContent(ContentManager Content)
         {
             starfield = new StarField(Content.Load<Texture2D>("Star"), 100, 100, new Random(),true);
-            ship = new Sprite(Content.Load<Texture2D>("TempShip"), 160, 90);
+            ship = new Sprite(Content.Load<Texture2D>("ShipSpritesheet"), 512, 512);
+            ship.Scale = Vector2.One / 2;
 
             if (option == TransitionOptions.TOLEVEL1)
             {

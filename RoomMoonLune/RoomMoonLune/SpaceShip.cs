@@ -37,6 +37,10 @@ namespace RoomMoonLune
         public SpaceShip(Texture2D texture,Texture2D particleTex, int width, int height,Random rand) : base(texture, width, height)
         {
             Health = 100;
+            Collider.Offset = -60;
+            Animation.Add("Left", new int[] { 0, 1, 2, 3 }, false, 4);
+            Animation.Add("Right", new int[] { 4, 5, 6, 7 }, false, 4);
+            scale = Vector2.One / 2;
             particleManager = new ParticleManager(particleTex, 64, 64, rand);
         }
 
@@ -45,6 +49,19 @@ namespace RoomMoonLune
             if (!isDocking && !isLeaving)
             {
                 color = Color.Lerp(Color.Red, Color.White, Health / MaxHealth);
+
+                if (Acceleration.X < 0)
+                {
+                    Animation.Play("Left");
+                }
+                else if (Acceleration.X > 0)
+                {
+                    Animation.Play("Right");
+                }
+                else
+                {
+                    Animation.Reverse();
+                }
 
                 particleManager.Update(gameTime, this);
                 base.Update(gameTime);
@@ -101,8 +118,8 @@ namespace RoomMoonLune
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            particleManager.Draw(spriteBatch);
             base.Draw(spriteBatch);
+            particleManager.Draw(spriteBatch);
         }
     }
 }

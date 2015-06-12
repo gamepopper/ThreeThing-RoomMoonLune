@@ -76,7 +76,7 @@ namespace RoomMoonLune
             starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
 
             particleTexture = Content.Load<Texture2D>("Particle");
-            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), particleTexture, 160, 90, rand);
+            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"), particleTexture, 512, 512, rand);
             Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 0) / 2;
             Ship.Velocity.X = (float)(rand.NextDouble() / 2) + 1;
             Ship.Velocity.X *= 50;
@@ -120,8 +120,7 @@ namespace RoomMoonLune
             title3.Update(gameTime);
             title4.Update(gameTime);
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
-
-            Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
+            
             if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
             {
                 Ship.Velocity.Y -= 5;
@@ -265,14 +264,14 @@ namespace RoomMoonLune
                                 title2.TextString = "Press start to Main Menu";
                                 Ship.Position = Moon.Position;
                                 Ship.Position += 625 * new Vector2((float)Math.Cos(Moon.Rotation - MathHelper.PiOver2), (float)Math.Sin(Moon.Rotation - MathHelper.PiOver2));
-                                Ship.Rotation = Moon.Rotation - MathHelper.PiOver2;
+                                Ship.Rotation = Moon.Rotation;
 
                                 if (RGlobal.Input.isGamePadButtonPressed(Buttons.Start))
                                 {
                                     RGlobal.Game.SwitchState(new TitleScreen());
                                 }
                             }
-                            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
+                            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
                             {
                                 Ship.IsDocking = true;
                                 foreach (var particle in Ship.PManager.Particles)

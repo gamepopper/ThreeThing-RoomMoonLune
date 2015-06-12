@@ -55,7 +55,7 @@ namespace RoomMoonLune
 
             particleTexture = Content.Load<Texture2D>("Particle");
 
-            Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), particleTexture, 160, 90, rand);
+            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"), particleTexture, 512, 512, rand);
             Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 150) / 2;
             Ship.Velocity.X = (float)(rand.NextDouble() / 2) + 1;
             Ship.Velocity.X *= 50;
@@ -84,8 +84,7 @@ namespace RoomMoonLune
             if (!Ship.IsDocking && !Ship.IsLeaving)
             {
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
-
-                Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
+                
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
                 {
                     Ship.Velocity.Y -= 5;
@@ -101,8 +100,7 @@ namespace RoomMoonLune
             else if (Ship.IsLeaving)
             {
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
-
-                Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
+                
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
                 {
                     Ship.Velocity.Y -= 5;
@@ -121,7 +119,7 @@ namespace RoomMoonLune
                     LevelSingleton.CargoMoonCount = 0;
                 Ship.Position = Moon.Position;
                 Ship.Position += 625 * new Vector2((float)Math.Cos(Moon.Rotation - MathHelper.PiOver2), (float)Math.Sin(Moon.Rotation - MathHelper.PiOver2));
-                Ship.Rotation = Moon.Rotation - MathHelper.PiOver2;
+                Ship.Rotation = Moon.Rotation;
 
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A) || LevelSingleton.CargoMoonCount == 0)
                 {
@@ -135,12 +133,10 @@ namespace RoomMoonLune
             landing.Rotation = Moon.Rotation;
             landing.Update(gameTime);
 
-          
-
             RGlobal.BackgroundColor = Color.Black;
             if (!Ship.IsLeaving)
             {
-                if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
+                if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
                 {
                     if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
                     {

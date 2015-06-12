@@ -36,6 +36,7 @@ namespace RoomMoonLune
             curTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (curTime > spawnTime)
             {
+                int counter = 0;
                 foreach (var particle in particles)
                 {
                     if (!particle.IsAlive)
@@ -43,10 +44,16 @@ namespace RoomMoonLune
                         float angle = ship.Rotation;
                         angle -= 3 * MathHelper.PiOver2;
                         
+                        if (counter == 0)
+                            particle.Respawn(new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f - (angle * 20), (float)( 150.0f)), spawnPosition - new Vector2(85, 0));
+                        else if (counter == 1)
+                            particle.Respawn(new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f - (angle * 20), (float)(150.0f)), spawnPosition + new Vector2(85, 0));
 
-                        particle.Respawn(new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f - (angle * 20), (float)( 150.0f)), spawnPosition - new Vector2(angle * 75, 0));
+                        counter++;
                         curTime = 0.0f;
-                        break;
+
+                        if (counter == 2)
+                            break;
                     }
                 }
             }
