@@ -129,14 +129,14 @@ namespace RoomMoonLune
                         }
                         else
                         {
-                            if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadUp))
+                            if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadUp) || RGlobal.Input.isKeyPressed(Keys.Up))
                             {
                                 RGlobal.Sound.Play("Start");
                                 option--;
                                 if (option < 0)
                                     option = 2;
                             }
-                            if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadDown))
+                            if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadDown) || RGlobal.Input.isKeyPressed(Keys.Down))
                             {
                                 RGlobal.Sound.Play("Start");
                                 option++;
@@ -165,7 +165,7 @@ namespace RoomMoonLune
                             default:
                                 break;
                         }
-                        if (RGlobal.Input.isGamePadButtonPressed(Buttons.A))
+                        if (RGlobal.Input.isGamePadButtonPressed(Buttons.A) || RGlobal.Input.isKeyPressed(Keys.Enter))
                         {
                             RGlobal.Sound.Play("Start");
                             switch (option)
@@ -175,11 +175,11 @@ namespace RoomMoonLune
                                     break;
                                 case 1:
                                     RGlobal.Sound.Play("Start");
-                                    RGlobal.Game.SwitchState(new Stage1());
+                                    RGlobal.Game.SwitchState(new TransitionState(TransitionOptions.TOLEVEL1));
                                     break;
 
                                 case 2:
-                                    App.Current.Exit();
+                                    Windows.UI.Xaml.Application.Current.Exit();
                                     break;
                                 default:
                                     break;
