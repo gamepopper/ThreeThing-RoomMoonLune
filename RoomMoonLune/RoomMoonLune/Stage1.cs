@@ -155,6 +155,7 @@ namespace RoomMoonLune
             if (LevelSingleton.CargoMoonCount >= 1000)
             {
                 LevelSingleton.CargoMoonCount = 1000;
+                LevelSingleton.Health = Ship.Health;
                 RGlobal.Game.SwitchState(new Stage2());
             }
 
