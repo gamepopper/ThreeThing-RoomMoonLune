@@ -8,7 +8,7 @@ namespace RoomMoonLune
     /// </summary>
     public class Game1 : RGame
     {
-        public Game1() : base(new TitleScreen())
+        public Game1() : base(new Stage2())
         {
             
         }

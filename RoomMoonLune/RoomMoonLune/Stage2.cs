@@ -14,6 +14,11 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace RoomMoonLune
 {
+    enum Stage2State
+    {
+        docking,
+        leaving
+    }
     class Stage2 : IRState
     {
         Sprite Moon;
@@ -22,9 +27,10 @@ namespace RoomMoonLune
         Texture2D particleTexture;
         SpaceShip Ship;
 
-       
+        Stage2State gameState = Stage2State.docking;
         Text Score;
         Text Health;
+        StarField starField;
 
         public void Initialize()
         {
@@ -62,6 +68,7 @@ namespace RoomMoonLune
             Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
             Health.Position = new Vector2(0, 25);
 
+            starField =new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
             RGlobal.Sound.Add("Landing", Content.Load<SoundEffect>("Land"));
         }
 
@@ -72,7 +79,9 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
-            if (!Ship.IsDocking)
+            starField.Update(gameTime);
+
+            if (!Ship.IsDocking && !Ship.IsLeaving)
             {
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
@@ -80,6 +89,24 @@ namespace RoomMoonLune
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
                 {
                     Ship.Velocity.Y -= 5;
+                }
+
+                if (LevelSingleton.CargoMoonCount == 0)
+                    Ship.IsLeaving = true;
+            }
+            else if (Ship.IsLeaving)
+            {
+                Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
+
+                Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
+                if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
+                {
+                    Ship.Velocity.Y -= 5;
+                }
+
+                if (Ship.Position.Y  < 20)
+                {
+                    RGlobal.Game.SwitchState(new Stage1());
                 }
             }
             else
@@ -126,7 +153,7 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-
+            starField.Draw(spriteBatch);
             Moon.Draw(spriteBatch);
             landing.Draw(spriteBatch);
             Ship.Draw(spriteBatch);

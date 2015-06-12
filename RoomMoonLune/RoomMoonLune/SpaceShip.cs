@@ -14,10 +14,17 @@ namespace RoomMoonLune
         ParticleManager particleManager;
         public float Health;
         bool isDocking;
+        bool isLeaving;
 
         public bool IsDocking
         { get { return isDocking; }
          set { isDocking = value; }
+        }
+
+        public bool IsLeaving
+        {
+            get { return isLeaving; }
+            set { isLeaving = value; }
         }
         public float MaxHealth
         {
@@ -35,7 +42,7 @@ namespace RoomMoonLune
 
         public override void Update(GameTime gameTime)
         {
-            if (!isDocking)
+            if (!isDocking && !isLeaving)
             {
                 color = Color.Lerp(Color.Red, Color.White, Health / MaxHealth);
 
@@ -69,6 +76,20 @@ namespace RoomMoonLune
                 }
 
                 RGlobal.Sound.Play("RocketJet", 0.1f, 0, 0, true);
+            }
+            else if(!isDocking && isLeaving)
+            {
+                color = Color.Lerp(Color.Red, Color.White, Health / MaxHealth);
+
+                particleManager.Update(gameTime, this);
+                base.Update(gameTime);
+
+                if (Position.Y + Collider.Box.Height / 2 > RGlobal.Resolution.VirtualHeight)
+                {
+                    Position = new Vector2(Position.X, RGlobal.Resolution.VirtualHeight - (Collider.Box.Height / 2));
+                    Velocity.Y = 0;
+                    Drag = new Vector2(1.01f, 1);
+                }
             }
             else
             {
