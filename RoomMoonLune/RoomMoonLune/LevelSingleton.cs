@@ -10,7 +10,7 @@ namespace RoomMoonLune
     {
 
         public static float TotalMoonCount = 0;
-        public static float CargoMoonCount = 1000;
+        public static float CargoMoonCount = 0;
         public static float Health = 100;
     }
 }

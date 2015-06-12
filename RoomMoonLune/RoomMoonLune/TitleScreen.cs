@@ -26,7 +26,7 @@ namespace RoomMoonLune
         Text title3;
         Text title4;
         bool fadingDown = true;
-
+        Sprite bgMoon;
         StarField starField;
         State gamestate = State.titleScreen;
         bool fadeAllOut = false;
@@ -34,6 +34,7 @@ namespace RoomMoonLune
         public void Initialize()
         {
             rand = new Random();
+            LevelSingleton.TotalMoonCount = 0;
         }
 
         public void LoadContent(ContentManager Content)
@@ -53,7 +54,10 @@ namespace RoomMoonLune
             title4 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start/Enter to Continue", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title4.Scale = new Vector2(0.6f, 0.6f);
             title4.Position = new Vector2(135, 605);
-            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
+
+            bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
+            bgMoon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight / 2);
 
             RGlobal.Sound.Add("Start", Content.Load<SoundEffect>("Button"));
 
@@ -66,6 +70,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
+            bgMoon.Update(gameTime);
             switch (gamestate)
             {
                 case State.titleScreen:
@@ -200,6 +205,7 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            bgMoon.Draw(spriteBatch);
             title1.Draw(spriteBatch);
             title2.Draw(spriteBatch);
             title3.Draw(spriteBatch);

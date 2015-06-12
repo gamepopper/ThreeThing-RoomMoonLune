@@ -16,6 +16,7 @@ namespace RoomMoonLune
     {
         Random rand;
         Sprite Moon;
+        Sprite bgMoon;
         Texture2D asteroidTexture;
         Texture2D moonOreTexture;
         Texture2D particleTexture;
@@ -51,7 +52,10 @@ namespace RoomMoonLune
             Moon = new Sprite(Content.Load<Texture2D>("Moon"), 240, 216);
             Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
 
-            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100,rand);
+            bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
+            bgMoon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight /2);
+
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100,rand,false);
 
             for (int i = 0; i < 10; i++)
             {
@@ -80,6 +84,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
+            bgMoon.Update(gameTime);
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
             Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4/2);
@@ -165,6 +170,8 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            
+            bgMoon.Draw(spriteBatch);
             starField.Draw(spriteBatch);
             for (int i = 0; i < RenderList.Count; i++)
             {

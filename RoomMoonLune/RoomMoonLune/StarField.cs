@@ -14,7 +14,7 @@ namespace RoomMoonLune
     class StarField
     {
         List<Sprite> stars = new List<Sprite>();
-        public StarField(Texture2D texture,int width, int height,Random rand)
+        public StarField(Texture2D texture,int width, int height,Random rand,bool fullScreen)
         {
             for (int i = 0; i < 100; i++)
             {
@@ -23,7 +23,10 @@ namespace RoomMoonLune
                 if (scaleNum > 0.15f)
                     scaleNum = 0.15f;
                 stars[i].Scale = new Vector2(scaleNum,scaleNum);
-                stars[i].Position = new Vector2(rand.Next(0, RGlobal.Resolution.VirtualWidth), rand.Next(0, RGlobal.Resolution.VirtualHeight));
+                if(!fullScreen)
+                    stars[i].Position = new Vector2(rand.Next(0, RGlobal.Resolution.VirtualWidth), rand.Next(0, RGlobal.Resolution.VirtualHeight/6*4 - 40));
+                else
+                    stars[i].Position = new Vector2(rand.Next(0, RGlobal.Resolution.VirtualWidth), rand.Next(0, RGlobal.Resolution.VirtualHeight));
 
                 int colorNum = rand.Next(0, 5);
                 switch (colorNum)

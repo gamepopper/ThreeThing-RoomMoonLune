@@ -42,7 +42,7 @@ namespace RoomMoonLune
             title4.Scale = new Vector2(0.6f, 0.6f);
             title4.Position = new Vector2(135, 605);
 
-            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,true);
         }
 
         public void UnloadContent()

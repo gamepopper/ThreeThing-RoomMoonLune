@@ -68,7 +68,7 @@ namespace RoomMoonLune
             Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
             Health.Position = new Vector2(0, 25);
 
-            starField =new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
+            starField =new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
             RGlobal.Sound.Add("Landing", Content.Load<SoundEffect>("Land"));
         }
 
@@ -94,6 +94,7 @@ namespace RoomMoonLune
                 if (LevelSingleton.CargoMoonCount == 0)
                 {
                     Ship.IsLeaving = true;
+                    Ship.IsDocking = false;
                 
                 }
             }
@@ -124,6 +125,7 @@ namespace RoomMoonLune
 
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A) || LevelSingleton.CargoMoonCount == 0)
                 {
+                    LevelSingleton.TotalMoonCount += 1000;
                     Ship.IsDocking = false;
                 }
             }
@@ -136,19 +138,21 @@ namespace RoomMoonLune
           
 
             RGlobal.BackgroundColor = Color.Black;
-            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
+            if (!Ship.IsLeaving)
             {
-                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
+                if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
                 {
-                    RGlobal.Sound.Play("Landing");
-                    Ship.IsDocking = true;
-                    foreach (var particle in Ship.PManager.Particles)
+                    if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
                     {
-                        particle.IsAlive = false;
+                        RGlobal.Sound.Play("Landing");
+                        Ship.IsDocking = true;
+                        foreach (var particle in Ship.PManager.Particles)
+                        {
+                            particle.IsAlive = false;
+                        }
                     }
                 }
             }
-
             Score.TextString = "    Score: " + (int)LevelSingleton.CargoMoonCount + "/1000";
             Health.TextString = "" + (int)Ship.Health + ": Health     ";
         }

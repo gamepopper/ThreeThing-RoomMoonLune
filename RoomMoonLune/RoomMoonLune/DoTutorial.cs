@@ -35,7 +35,7 @@ namespace RoomMoonLune
         Texture2D particleTexture;
         bool fadingDown = true;
         bool fadeAllOut = false;
-
+        Sprite bgMoon;
         //stage 1 tutorial
         Sprite asteroid;
         Sprite ore;
@@ -51,6 +51,9 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
+            bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
+            bgMoon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight / 2);
+
             title1 = new Text(Content.Load<SpriteFont>("TitleFont"), "Do-Tutorial ", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title1.Scale = new Vector2(1.0f, 1.0f);
             title1.Position = new Vector2(0, 100);
@@ -70,7 +73,7 @@ namespace RoomMoonLune
             title4 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start to Continue", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title4.Scale = new Vector2(0.6f, 0.6f);
             title4.Position = new Vector2(135, 605);
-            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
 
             particleTexture = Content.Load<Texture2D>("Particle");
             Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), particleTexture, 160, 90, rand);
@@ -110,6 +113,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
+            bgMoon.Update(gameTime);
             starField.Update(gameTime);
             title1.Update(gameTime);
             title2.Update(gameTime);
@@ -300,7 +304,7 @@ namespace RoomMoonLune
         {
 
             spriteBatch.Begin();
-            
+            bgMoon.Draw(spriteBatch);
             if(gamestate == DoTutorialState.movement)
             {
                 starField.Draw(spriteBatch);

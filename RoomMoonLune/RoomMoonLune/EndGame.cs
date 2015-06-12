@@ -19,7 +19,7 @@ namespace RoomMoonLune
         Text title2;
         Text title3;
         StarField starField;
-
+        Sprite bgMoon;
         public void Initialize()
         {
             rand = new Random();
@@ -27,6 +27,9 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
+            bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
+            bgMoon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight / 2);
+
             title1 = new Text(Content.Load<SpriteFont>("TitleFont"), "Game Over! ", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title1.Scale = new Vector2(1.0f, 1.0f);
             title1.Position = new Vector2(0, 200);
@@ -38,7 +41,7 @@ namespace RoomMoonLune
             title3 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start to Main Menu", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title3.Scale = new Vector2(1.0f, 1.0f);
             title3.Position = new Vector2(0, 605);
-            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand);
+            starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
             RGlobal.Sound.Add("GameOver", Content.Load<SoundEffect>("GameOver"));
             RGlobal.Sound.Play("GameOver");
         }
@@ -50,6 +53,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
+            bgMoon.Update(gameTime);
             title1.Update(gameTime);
             title2.Update(gameTime);
             title3.Update(gameTime);
@@ -62,6 +66,7 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            bgMoon.Draw(spriteBatch);
             title1.Draw(spriteBatch);
             title2.Draw(spriteBatch);
             title3.Draw(spriteBatch);
