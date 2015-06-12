@@ -51,8 +51,8 @@ namespace RoomMoonLune
                 this.Texture = texture;
                 
                 
-                Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5,6,7 }, true,8);
-                Animation.Play("asteroids");
+               //Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5,6,7 }, true,8);
+               // Animation.Play("asteroids");
             }
             else if (randomNum == 1)
             {
@@ -84,6 +84,7 @@ namespace RoomMoonLune
                 switch (type)
                 {
                     case EnemyType.asteroid:
+                        Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         if (scale.X < asteroidMaxScale)
                             scale = scaleUp;
                         else

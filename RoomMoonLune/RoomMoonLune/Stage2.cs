@@ -35,7 +35,7 @@ namespace RoomMoonLune
         Sprite arrow1, arrow2;
         float time = 0;
         float flash = 0;
-
+        Sprite bgMoon;
         public void Initialize()
         {
             rand = new Random();
@@ -44,7 +44,7 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
-            Moon = new Sprite(Content.Load<Texture2D>("Landing"), 1348, 1300);
+            Moon = new Sprite(Content.Load<Texture2D>("Landing"),  1348, 1300);
             landing = new Sprite(Content.Load<Texture2D>("Landing"), 350, 400);
             //Moon = new Sprite(Content.Load<Texture2D>("MoonSpriteSheet"), 640, 360);
             //Moon.Animation.Add("standard", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 }, true, 11);
@@ -79,6 +79,8 @@ namespace RoomMoonLune
 
             starField =new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
 
+            bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
+            bgMoon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight / 2);
             RGlobal.Sound.Add("Landing", Content.Load<SoundEffect>("Land"));
         }
 
@@ -89,6 +91,7 @@ namespace RoomMoonLune
 
         public void Update(GameTime gameTime)
         {
+            bgMoon.Update(gameTime);
             starField.Update(gameTime);
             if (!Ship.IsDocking && !Ship.IsLeaving)
             {
@@ -173,7 +176,9 @@ namespace RoomMoonLune
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            bgMoon.Draw(spriteBatch);
             starField.Draw(spriteBatch);
+            
             Moon.Draw(spriteBatch);
            // landing.Draw(spriteBatch);
             Ship.Draw(spriteBatch);
