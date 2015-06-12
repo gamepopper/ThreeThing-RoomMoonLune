@@ -31,10 +31,6 @@ namespace RoomMoonLune
 
         public void Initialize()
         {
-            RGlobal.Input.InvertedLeft = true;
-            RGlobal.Input.InvertedRight = true;
-            TouchPanel.EnableMouseGestures = true;
-            TouchPanel.EnableMouseTouchPoint = true;
             rand = new Random();
         }
 

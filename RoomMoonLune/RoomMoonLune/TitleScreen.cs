@@ -33,6 +33,10 @@ namespace RoomMoonLune
         int option = 0;
         public void Initialize()
         {
+            RGlobal.Input.InvertedLeft = true;
+            RGlobal.Input.InvertedRight = true;
+            TouchPanel.EnableMouseGestures = true;
+            TouchPanel.EnableMouseTouchPoint = true;
             rand = new Random();
             LevelSingleton.TotalMoonCount = 0;
         }
