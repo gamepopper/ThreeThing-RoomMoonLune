@@ -36,7 +36,7 @@ namespace RoomMoonLune
 
         public void LoadContent(ContentManager Content)
         {
-            asteroidTexture = Content.Load<Texture2D>("Asteroid");
+            asteroidTexture = Content.Load<Texture2D>("asteroids");
             moonOreTexture = Content.Load<Texture2D>("MoonOre");
             particleTexture = Content.Load<Texture2D>("Particle");
 
@@ -55,7 +55,7 @@ namespace RoomMoonLune
 
             for (int i = 0; i < 10; i++)
             {
-                spawningObjects.Add(new SpawningObject(asteroidTexture,moonOreTexture, 240, 216,rand));
+                spawningObjects.Add(new SpawningObject(asteroidTexture,moonOreTexture, 200, 200,rand));
             }
 
             RenderList.AddRange(spawningObjects);

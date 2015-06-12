@@ -51,8 +51,8 @@ namespace RoomMoonLune
                 this.Texture = texture;
                 
                 
-                //Animation.Add("asteroid", new int[] { 0, 1, 2, 3, 4, 5 }, true);
-                //Animation.Play("asteroid");
+                Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5,6,7 }, true,8);
+                Animation.Play("asteroids");
             }
             else if (randomNum == 1)
             {
