@@ -164,6 +164,7 @@
     <Compile Include="Stage1.cs" />
     <Compile Include="Stage2.cs" />
     <Compile Include="TitleScreen.cs" />
+    <Compile Include="TransitionState.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

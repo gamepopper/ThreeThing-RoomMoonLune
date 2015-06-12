@@ -45,11 +45,11 @@ namespace RoomMoonLune
             //Moon = new Sprite(Content.Load<Texture2D>("MoonSpriteSheet"), 640, 360);
             //Moon.Animation.Add("standard", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 }, true, 11);
             //Moon.Animation.Play("standard");
-            Moon.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
+            Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
             Moon.Scale = new Vector2(1.0f, 1.0f);
             Moon.Rotation = (float)rand.NextDouble() * MathHelper.TwoPi;
 
-            landing.Position = new Vector2(RGlobal.Resolution.ScreenWidth / 2, RGlobal.Resolution.ScreenHeight + 150);
+            landing.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
             landing.Origin = new Vector2(landing.Origin.X, 750);
             landing.Scale = new Vector2(0.75f, 0.75f);
 
