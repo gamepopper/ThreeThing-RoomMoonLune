@@ -69,11 +69,13 @@ namespace RoomMoonLune
             RGlobal.Sound.Add("RocketJet", Content.Load<SoundEffect>("Rocket"));
             RGlobal.Sound.Add("Asteroid", Content.Load<SoundEffect>("Explosion"));
             RGlobal.Sound.Add("Ore", Content.Load<SoundEffect>("Ore"));
+            RGlobal.Sound.Add("GameOver", Content.Load<SoundEffect>("GameOver"));
         }
 
         public void UnloadContent()
         {
-            RGlobal.Sound.Clear();
+            RGlobal.Sound.Remove("Asteroid");
+            RGlobal.Sound.Remove("Ore");
         }
 
         public void Update(GameTime gameTime)
