@@ -126,6 +126,7 @@ namespace RoomMoonLune
 
                 if (Ship.Position.Y  < 20)
                 {
+                    LevelSingleton.TotalMoonCount += 1000;
                     RGlobal.Game.SwitchState(new Stage1());
                 }
             }
@@ -141,7 +142,7 @@ namespace RoomMoonLune
 
                 if (RGlobal.Input.isGamePadButtonDown(Buttons.A) || LevelSingleton.CargoMoonCount == 0)
                 {
-                    LevelSingleton.TotalMoonCount += 1000;
+                    
                     Ship.IsDocking = false;
                     Ship.Rotation = 0;
                 }

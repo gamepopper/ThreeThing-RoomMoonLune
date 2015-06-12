@@ -23,7 +23,7 @@ namespace RoomMoonLune
         #region Variables
         float               scaleSpeed;
         float               fadingSpeed = 1.4f;
-        float               asteroidMaxScale = 1.3f;
+        float               asteroidMaxScale = 2.3f;
         float               moonOreMaxScale = 0.4f;
         Vector2             randomDirection;
         Random              rand;
@@ -45,7 +45,7 @@ namespace RoomMoonLune
             isAlive = false;
 
             int randomNum = rand.Next(0, 3);
-            if (randomNum == 0 || randomNum == 2)
+            if (randomNum == 0 )
             {
                 type = EnemyType.asteroid;
                 this.Texture = texture;
@@ -54,7 +54,7 @@ namespace RoomMoonLune
                //Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5,6,7 }, true,8);
                // Animation.Play("asteroids");
             }
-            else if (randomNum == 1)
+            else if (randomNum == 1 || randomNum == 2)
             {
                 type = EnemyType.moonOre;
                 this.Texture = moonOreTexture;
@@ -84,6 +84,8 @@ namespace RoomMoonLune
                 switch (type)
                 {
                     case EnemyType.asteroid:
+                        //update position
+                        position += randomDirection * 2.0f;
                         Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         if (scale.X < asteroidMaxScale)
                             scale = scaleUp;
@@ -96,6 +98,8 @@ namespace RoomMoonLune
                         }
                         break;
                     case EnemyType.moonOre:
+                        //update position
+                        position += randomDirection;
                         Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         if (scale.X < moonOreMaxScale)
                             scale = scaleUp;
@@ -113,8 +117,7 @@ namespace RoomMoonLune
                 //check if scaled to max then start fading out
                 
 
-                //update position
-                position += randomDirection;
+               
                 base.Update(gameTime);
             }
         }
