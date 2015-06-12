@@ -55,9 +55,9 @@ namespace RoomMoonLune
             title3.Scale = new Vector2(1.0f, 1.0f);
             title3.Position = new Vector2(0, 405);
 
-            title4 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start/Enter to Continue", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
+            title4 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start to Continue", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title4.Scale = new Vector2(0.6f, 0.6f);
-            title4.Position = new Vector2(135, 605);
+            title4.Position = new Vector2(230, 605);
             starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
 
             bgMoon = new Sprite(Content.Load<Texture2D>("MoonBG"), 1280, 720);
