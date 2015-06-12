@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Game1.cs" />
     <Compile Include="LevelSingleton.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="ParticleManager.cs" />
     <Compile Include="StarField.cs" />
     <Compile Include="ThrustParticles.cs" />
