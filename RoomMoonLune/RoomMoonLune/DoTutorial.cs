@@ -43,6 +43,7 @@ namespace RoomMoonLune
         //final tutorial - docking
         Sprite Moon;
         Sprite landing;
+        Sprite landingCollision;
         bool canMoveToFinal;
         public void Initialize()
         {
@@ -84,12 +85,14 @@ namespace RoomMoonLune
             Ship.Drag = new Vector2(1.01f, 1);
 
             //tutorial stage 1
-            Texture2D asteroidTexture = Content.Load<Texture2D>("Asteroid");
+            Texture2D asteroidTexture = Content.Load<Texture2D>("Asteroids");
             Texture2D moonOreTexture = Content.Load<Texture2D>("MoonOre");
 
-            asteroid = new Sprite(asteroidTexture, 240, 216);
+            asteroid = new Sprite(asteroidTexture, 200, 200);
             asteroid.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 3, 400);
             asteroid.Scale = new Vector2(0.6f, 0.6f);
+            asteroid.Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, true, 8);
+            asteroid.Animation.Play("asteroids");
             ore = new Sprite(moonOreTexture, 240, 216);
             ore.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 3 * 2, 400);
             ore.Scale = new Vector2(0.6f, 0.6f);
@@ -105,6 +108,12 @@ namespace RoomMoonLune
             landing.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
             landing.Origin = new Vector2(landing.Origin.X, 750);
             landing.Scale = new Vector2(0.75f, 0.75f);
+            landing.Collider.Offset = -50;
+
+            //landingCollision = new Sprite(Content.Load<Texture2D>("Moon"), 350, 400);
+            //landingCollision.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
+            //landingCollision.Origin = new Vector2(landing.Origin.X, 750);
+            //landingCollision.Scale = new Vector2(1.75f, 0.35f);
         }
 
         public void UnloadContent()
@@ -119,6 +128,7 @@ namespace RoomMoonLune
             title2.Update(gameTime);
             title3.Update(gameTime);
             title4.Update(gameTime);
+
             Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
             
             if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
@@ -182,7 +192,7 @@ namespace RoomMoonLune
                     }
                     break;
                 case DoTutorialState.aim:
-                   
+                    asteroid.Update(gameTime);
                     if (fadeAllOut)
                     {
                         if (title1.Opacity < 1)
@@ -228,6 +238,8 @@ namespace RoomMoonLune
                                 Moon.Rotation += 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 landing.Rotation = Moon.Rotation;
                                 landing.Update(gameTime);
+                                //landingCollision.Rotation = Moon.Rotation;
+                                //landingCollision.Update(gameTime);
                                 gamestate = DoTutorialState.docking;
                             }
                         }
@@ -257,8 +269,9 @@ namespace RoomMoonLune
                             Moon.Rotation += 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             landing.Rotation = Moon.Rotation;
                             landing.Update(gameTime);
-                           
-                            if(Ship.IsDocking)
+                            //landingCollision.Rotation = Moon.Rotation;
+                            //landingCollision.Update(gameTime);
+                            if (Ship.IsDocking)
                             {
                                 title1.TextString = "Tutorial Finished";
                                 title2.TextString = "Press start to Main Menu";
@@ -271,7 +284,7 @@ namespace RoomMoonLune
                                     RGlobal.Game.SwitchState(new TitleScreen());
                                 }
                             }
-                            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
+                            else if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
                             {
                                 Ship.IsDocking = true;
                                 foreach (var particle in Ship.PManager.Particles)
@@ -279,7 +292,7 @@ namespace RoomMoonLune
                                     particle.IsAlive = false;
                                 }
 
-                                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
+                                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13 )
                                 {
                                     RGlobal.Sound.Play("Landing");
                                     Ship.IsDocking = true;
@@ -332,6 +345,7 @@ namespace RoomMoonLune
                 starField.Draw(spriteBatch);
                 Moon.Draw(spriteBatch);
                 landing.Draw(spriteBatch);
+               // landingCollision.Draw(spriteBatch);
                 Ship.Draw(spriteBatch);
                 title1.Draw(spriteBatch);
                 title2.Draw(spriteBatch);
