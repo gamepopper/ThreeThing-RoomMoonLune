@@ -77,7 +77,7 @@ namespace RoomMoonLune
             starField = new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
 
             particleTexture = Content.Load<Texture2D>("Particle");
-            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"), particleTexture, 512, 512, rand);
+            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"), particleTexture, 256, 256, rand);
             Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 0) / 2;
             Ship.Velocity.X = (float)(rand.NextDouble() / 2) + 1;
             Ship.Velocity.X *= 50;
@@ -93,12 +93,12 @@ namespace RoomMoonLune
             asteroid.Scale = new Vector2(0.6f, 0.6f);
             asteroid.Animation.Add("asteroids", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, true, 8);
             asteroid.Animation.Play("asteroids");
-            ore = new Sprite(moonOreTexture, 240, 216);
+            ore = new Sprite(moonOreTexture, 200, 200);// 240, 216);
             ore.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 3 * 2, 400);
             ore.Scale = new Vector2(0.6f, 0.6f);
 
             //tutorial stage 2
-            Moon = new Sprite(Content.Load<Texture2D>("Moon"), 800, 800);
+            Moon = new Sprite(Content.Load<Texture2D>("Landing"), 1348, 1300);
             landing = new Sprite(Content.Load<Texture2D>("Landing"), 350, 400);
 
             Moon.Position = new Vector2(RGlobal.Resolution.VirtualWidth / 2, RGlobal.Resolution.VirtualHeight + 150);
@@ -234,7 +234,7 @@ namespace RoomMoonLune
                                 title1.TextString = "Final Stage";
                                 title2.TextString = "Navigate the ship down gently to land onto the landing dock \nthis stores the ore you collected in the previous stage";
                                 fadeAllOut = true;
-                                Moon.Update(gameTime);
+                                //Moon.Update(gameTime);
                                 Moon.Rotation += 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 landing.Rotation = Moon.Rotation;
                                 landing.Update(gameTime);
@@ -265,7 +265,7 @@ namespace RoomMoonLune
                         }
                         else
                         {
-                            Moon.Update(gameTime);
+                            //Moon.Update(gameTime);
                             Moon.Rotation += 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             landing.Rotation = Moon.Rotation;
                             landing.Update(gameTime);
@@ -292,7 +292,7 @@ namespace RoomMoonLune
                                     particle.IsAlive = false;
                                 }
 
-                                if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13 )
+                                if (Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13 )
                                 {
                                     RGlobal.Sound.Play("Landing");
                                     Ship.IsDocking = true;
@@ -344,7 +344,7 @@ namespace RoomMoonLune
             {
                 starField.Draw(spriteBatch);
                 Moon.Draw(spriteBatch);
-                landing.Draw(spriteBatch);
+                //landing.Draw(spriteBatch);
                // landingCollision.Draw(spriteBatch);
                 Ship.Draw(spriteBatch);
                 title1.Draw(spriteBatch);

@@ -95,6 +95,7 @@ namespace RoomMoonLune
                         }
                         break;
                     case EnemyType.moonOre:
+                        Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         if (scale.X < moonOreMaxScale)
                             scale = scaleUp;
                         else

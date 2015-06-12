@@ -40,7 +40,7 @@ namespace RoomMoonLune
             moonOreTexture = Content.Load<Texture2D>("MoonOre");
             particleTexture = Content.Load<Texture2D>("Particle");
 
-            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"),particleTexture, 512, 512,rand);
+            Ship = new SpaceShip(Content.Load<Texture2D>("ShipSpritesheet"),particleTexture, 256, 256, rand);
             Ship.Position = new Vector2(RGlobal.Resolution.VirtualWidth, RGlobal.Resolution.VirtualHeight) / 2;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
@@ -125,7 +125,7 @@ namespace RoomMoonLune
                                 RGlobal.Sound.Play("Asteroid");
 
                                 Ship.Health -= 35;
-                                if(Ship.Health <0)
+                                if(Ship.Health < 0)
                                 {
                                     RGlobal.Game.SwitchState(new EndGame());
                                 }

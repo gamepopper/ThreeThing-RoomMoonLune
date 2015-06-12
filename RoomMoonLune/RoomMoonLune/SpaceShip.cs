@@ -12,6 +12,7 @@ namespace RoomMoonLune
     class SpaceShip : Sprite
     {
         ParticleManager particleManager;
+        ParticleManager smokeManager;
         public float Health;
         bool isDocking;
         bool isLeaving;
@@ -37,11 +38,12 @@ namespace RoomMoonLune
         public SpaceShip(Texture2D texture,Texture2D particleTex, int width, int height,Random rand) : base(texture, width, height)
         {
             Health = 100;
-            Collider.Offset = -60;
+           // Collider.Offset = -60;
             Animation.Add("Left", new int[] { 0, 1, 2, 3 }, false, 4);
             Animation.Add("Right", new int[] { 4, 5, 6, 7 }, false, 4);
-            scale = Vector2.One / 2;
-            particleManager = new ParticleManager(particleTex, 64, 64, rand);
+            //scale = Vector2.One / 2;
+            particleManager = new ParticleManager(particleTex, 64, 64, rand,ParticleType.thrust);
+            smokeManager = new ParticleManager(particleTex, 64, 64, rand,ParticleType.smoker);
         }
 
         public override void Update(GameTime gameTime)
@@ -64,6 +66,7 @@ namespace RoomMoonLune
                 }
 
                 particleManager.Update(gameTime, this);
+                smokeManager.Update(gameTime, this);
                 base.Update(gameTime);
 
                 if (Position.Y + Collider.Box.Height / 2 > RGlobal.Resolution.VirtualHeight)
@@ -120,6 +123,7 @@ namespace RoomMoonLune
         {
             base.Draw(spriteBatch);
             particleManager.Draw(spriteBatch);
+           
         }
     }
 }

@@ -136,6 +136,7 @@
     <Compile Include="LevelSingleton.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="ParticleManager.cs" />
+    <Compile Include="SmokeParticles.cs" />
     <Compile Include="StarField.cs" />
     <Compile Include="ThrustParticles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
