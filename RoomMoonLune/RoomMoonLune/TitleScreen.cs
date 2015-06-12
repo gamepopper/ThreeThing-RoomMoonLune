@@ -90,9 +90,12 @@ namespace RoomMoonLune
                     title4.Update(gameTime);
 
                     if (RGlobal.Input.isGamePadButtonPressed(Buttons.Start) || RGlobal.Input.isKeyPressed(Keys.Enter))
+                    {
                         fadeAllOut = true;
+                        RGlobal.Sound.Play("Start");
+                    }
 
-                    if(fadeAllOut)
+                    if (fadeAllOut)
                     {
                         if(title1.Opacity > 0)
                         {
@@ -128,12 +131,14 @@ namespace RoomMoonLune
                         {
                             if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadUp))
                             {
+                                RGlobal.Sound.Play("Start");
                                 option--;
                                 if (option < 0)
                                     option = 2;
                             }
                             if (RGlobal.Input.isGamePadButtonPressed(Buttons.DPadDown))
                             {
+                                RGlobal.Sound.Play("Start");
                                 option++;
                                 if (option > 2)
                                     option = 0;
@@ -162,6 +167,7 @@ namespace RoomMoonLune
                         }
                         if (RGlobal.Input.isGamePadButtonPressed(Buttons.A))
                         {
+                            RGlobal.Sound.Play("Start");
                             switch (option)
                             {
                                 case 0:
@@ -186,11 +192,8 @@ namespace RoomMoonLune
                     break;
             }
             starField.Update(gameTime);
-           
             title4.Update(gameTime);
 
-                     
-              
 
         }
 

@@ -55,6 +55,7 @@ namespace RoomMoonLune
             Ship.Velocity.X *= 50;
             Ship.Acceleration.Y = 98.1f;
             Ship.Drag = new Vector2(1.01f, 1);
+            Ship.Health = LevelSingleton.Health;
 
             Score = new Text(Content.Load<SpriteFont>("Font"), "Score: ", RGlobal.Resolution.VirtualWidth, TextAlignment.LEFT);
             Score.Position = new Vector2(0, 25);
@@ -91,7 +92,7 @@ namespace RoomMoonLune
                 Ship.Position += 625 * new Vector2((float)Math.Cos(Moon.Rotation - MathHelper.PiOver2), (float)Math.Sin(Moon.Rotation - MathHelper.PiOver2));
                 Ship.Rotation = Moon.Rotation - MathHelper.PiOver2;
 
-                if (RGlobal.Input.isGamePadButtonDown(Buttons.A))
+                if (RGlobal.Input.isGamePadButtonDown(Buttons.A) || LevelSingleton.CargoMoonCount == 0)
                 {
                     Ship.IsDocking = false;
                 }
@@ -105,7 +106,7 @@ namespace RoomMoonLune
             Ship.Update(gameTime);
 
             RGlobal.BackgroundColor = Color.Black;
-            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Box))
+            if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
             {
                 if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
                 {
