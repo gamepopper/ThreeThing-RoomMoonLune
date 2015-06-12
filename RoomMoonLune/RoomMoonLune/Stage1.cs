@@ -128,7 +128,7 @@ namespace RoomMoonLune
                                 Ship.Health -= 35;
                                 if(Ship.Health <0)
                                 {
-                                    //DEAD
+                                    RGlobal.Game.SwitchState(new EndGame());
                                 }
                             }
                         }

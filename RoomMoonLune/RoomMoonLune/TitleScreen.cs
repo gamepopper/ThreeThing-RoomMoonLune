@@ -168,6 +168,7 @@ namespace RoomMoonLune
                                   
                                     break;
                                 case 1:
+                                    RGlobal.Sound.Play("Start");
                                     RGlobal.Game.SwitchState(new Stage1());
                                     break;
 
@@ -188,11 +189,8 @@ namespace RoomMoonLune
            
             title4.Update(gameTime);
 
-            if (RGlobal.Input.isGamePadButtonPressed(Buttons.Start) || RGlobal.Input.isKeyPressed(Keys.Enter))
-            {
-                RGlobal.Sound.Play("Start");
-                RGlobal.Game.SwitchState(new Stage1());
-            }
+                     
+              
 
         }
 

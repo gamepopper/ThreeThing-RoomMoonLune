@@ -33,7 +33,7 @@ public ThrustParticles(Texture2D texture,int width, int height,Random rand):base
             curTime = 0.0f;
             position = new Vector2(350, 150);
             this.scale = new Vector2(1.0f, 1.0f);
-            color = Color.Yellow;
+            color = Color.LightYellow;
             direction = new Vector2((float)(rand.NextDouble() * 50.0) - 25.0f, (float)(30.0f));
             
         }
@@ -52,11 +52,15 @@ public ThrustParticles(Texture2D texture,int width, int height,Random rand):base
 
                         if (scale.X < 0.6)
                         {
-                            color = Color.Lerp(color, Color.Red, 5 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                            color = Color.Lerp(color, Color.OrangeRed, 5 * (float)gameTime.ElapsedGameTime.TotalSeconds);
                         }
-                        else if (scale.X < 1.2)
+                        else if (scale.X < 1.0)
                         {
-                            color = Color.Lerp(color, Color.Black, 3 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                            color = Color.Lerp(color, Color.Red, 3 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                        }
+                        else if (scale.X < 1.5)
+                        {
+                            color = Color.Lerp(color, Color.DarkGray, 3 * (float)gameTime.ElapsedGameTime.TotalSeconds);
                         }
                     }
 

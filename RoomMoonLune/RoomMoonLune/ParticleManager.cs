@@ -22,7 +22,7 @@ namespace RoomMoonLune
         public ParticleManager(Texture2D texture, int width, int height, Random rand)
         {
             this.rand = rand;
-            for (int i = 0; i <= 50; i++)
+            for (int i = 0; i <= 80; i++)
             {
                 particles.Add(new ThrustParticles(texture, width, height,rand));
             }
