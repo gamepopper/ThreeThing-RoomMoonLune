@@ -8,6 +8,7 @@ using Ricoh2DFramework.Graphics;
 using Ricoh2DFramework.Collisions;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace RoomMoonLune
 {
@@ -41,6 +42,8 @@ namespace RoomMoonLune
             title4 = new Text(Content.Load<SpriteFont>("TitleFont"), "Press Start/Enter to Continue", RGlobal.Resolution.VirtualWidth, TextAlignment.CENTER);
             title4.Scale = new Vector2(0.6f, 0.6f);
             title4.Position = new Vector2(135, 605);
+
+            RGlobal.Sound.Add("Start", Content.Load<SoundEffect>("Button"));
         }
 
         public void UnloadContent()
@@ -70,8 +73,11 @@ namespace RoomMoonLune
            
             title4.Update(gameTime);
 
-            if(RGlobal.Input.isGamePadButtonPressed(Buttons.Start) || RGlobal.Input.isKeyPressed(Keys.Enter))
+            if (RGlobal.Input.isGamePadButtonPressed(Buttons.Start) || RGlobal.Input.isKeyPressed(Keys.Enter))
+            {
+                RGlobal.Sound.Play("Start");
                 RGlobal.Game.SwitchState(new Stage1());
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

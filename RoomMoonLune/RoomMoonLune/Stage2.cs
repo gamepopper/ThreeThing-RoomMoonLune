@@ -60,19 +60,19 @@ namespace RoomMoonLune
             Score.Position = new Vector2(0, 25);
             Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
             Health.Position = new Vector2(0, 25);
+
+            RGlobal.Sound.Add("Landing", Content.Load<SoundEffect>("Land"));
         }
 
         public void UnloadContent()
         {
-            RGlobal.Sound.Clear();
+            RGlobal.Sound.Remove("Landing");
         }
 
         public void Update(GameTime gameTime)
         {
             if (!Ship.IsDocking)
             {
-               
-
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
 
                 Ship.Rotation = 3 * MathHelper.PiOver2 + (RGlobal.Input.LeftAnalogStick.X * MathHelper.PiOver4 / 2);
@@ -83,11 +83,11 @@ namespace RoomMoonLune
             }
             else
             {
-                if(LevelSingleton.CargoMoonCount > 0)
+                if (LevelSingleton.CargoMoonCount > 0)
                     LevelSingleton.CargoMoonCount -= 80 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (LevelSingleton.CargoMoonCount < 0)
                     LevelSingleton.CargoMoonCount = 0;
-                        Ship.Position = Moon.Position;
+                Ship.Position = Moon.Position;
                 Ship.Position += 625 * new Vector2((float)Math.Cos(Moon.Rotation - MathHelper.PiOver2), (float)Math.Sin(Moon.Rotation - MathHelper.PiOver2));
                 Ship.Rotation = Moon.Rotation - MathHelper.PiOver2;
 
@@ -109,6 +109,7 @@ namespace RoomMoonLune
             {
                 if (RGlobal.Input.isGamePadButtonUp(Buttons.A) && Math.Abs(Ship.Velocity.X) < 15 && Math.Abs(Ship.Velocity.Y) < 13)
                 {
+                    RGlobal.Sound.Play("Landing");
                     Ship.IsDocking = true;
                     foreach (var particle in Ship.PManager.Particles)
                     {
