@@ -32,6 +32,10 @@ namespace RoomMoonLune
         Text Health;
         StarField starField;
 
+        Sprite arrow1, arrow2;
+        float time = 0;
+        float flash = 0;
+
         public void Initialize()
         {
             rand = new Random();
@@ -67,6 +71,11 @@ namespace RoomMoonLune
             Score.Position = new Vector2(0, 25);
             Health = new Text(Content.Load<SpriteFont>("Font"), ": Health", RGlobal.Resolution.VirtualWidth, TextAlignment.RIGHT);
             Health.Position = new Vector2(0, 25);
+
+            arrow1 = new Sprite(Content.Load<Texture2D>("Arrow"));
+            arrow1.Position = new Vector2(320, 150);
+            arrow2 = new Sprite(Content.Load<Texture2D>("Arrow"));
+            arrow2.Position = new Vector2(960, 150);
 
             starField =new StarField(Content.Load<Texture2D>("Star"), 100, 100, rand,false);
             RGlobal.Sound.Add("Landing", Content.Load<SoundEffect>("Land"));
@@ -105,6 +114,12 @@ namespace RoomMoonLune
                 {
                     Ship.Velocity.Y -= 5;
                 }
+
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds * 5;
+                flash = (float)Math.Sin(time);
+
+                arrow1.Opacity = arrow2.Opacity = (flash + 1) / 2.0f;
+
 
                 if (Ship.Position.Y  < 20)
                 {
@@ -162,6 +177,11 @@ namespace RoomMoonLune
             Ship.Draw(spriteBatch);
             Score.Draw(spriteBatch);
             Health.Draw(spriteBatch);
+            if (Ship.IsLeaving)
+            {
+                arrow1.Draw(spriteBatch);
+                arrow2.Draw(spriteBatch);
+            }
             spriteBatch.End();
         }
     }
