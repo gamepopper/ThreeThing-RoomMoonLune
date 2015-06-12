@@ -171,7 +171,7 @@ namespace RoomMoonLune
                             switch (option)
                             {
                                 case 0:
-                                  
+                                    RGlobal.Game.SwitchState(new DoTutorial());
                                     break;
                                 case 1:
                                     RGlobal.Sound.Play("Start");

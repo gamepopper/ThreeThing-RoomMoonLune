@@ -127,3 +127,9 @@
 /processorParam:TextureFormat=Color
 /build:Particle.png
 
+#begin DoTutorialFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:DoTutorialFont.spritefont
+

@@ -56,7 +56,7 @@ namespace RoomMoonLune
             particleTexture = Content.Load<Texture2D>("Particle");
 
             Ship = new SpaceShip(Content.Load<Texture2D>("TempShip"), particleTexture, 160, 90, rand);
-            Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 0) / 2;
+            Ship.Position = new Vector2((float)rand.NextDouble() * RGlobal.Resolution.VirtualWidth, 150) / 2;
             Ship.Velocity.X = (float)(rand.NextDouble() / 2) + 1;
             Ship.Velocity.X *= 50;
             Ship.Acceleration.Y = 98.1f;
@@ -80,7 +80,7 @@ namespace RoomMoonLune
         public void Update(GameTime gameTime)
         {
             starField.Update(gameTime);
-
+            Ship.Update(gameTime);
             if (!Ship.IsDocking && !Ship.IsLeaving)
             {
                 Ship.Acceleration.X = RGlobal.Input.LeftAnalogStick.X * 100;
@@ -92,7 +92,10 @@ namespace RoomMoonLune
                 }
 
                 if (LevelSingleton.CargoMoonCount == 0)
+                {
                     Ship.IsLeaving = true;
+                
+                }
             }
             else if (Ship.IsLeaving)
             {
@@ -112,7 +115,7 @@ namespace RoomMoonLune
             else
             {
                 if (LevelSingleton.CargoMoonCount > 0)
-                    LevelSingleton.CargoMoonCount -= 80 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    LevelSingleton.CargoMoonCount -= 70 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (LevelSingleton.CargoMoonCount < 0)
                     LevelSingleton.CargoMoonCount = 0;
                 Ship.Position = Moon.Position;
@@ -130,7 +133,7 @@ namespace RoomMoonLune
             landing.Rotation = Moon.Rotation;
             landing.Update(gameTime);
 
-            Ship.Update(gameTime);
+          
 
             RGlobal.BackgroundColor = Color.Black;
             if (CollisionManager.Collide(Ship.Collider, landing.Collider, CollisionType.Pixel))
